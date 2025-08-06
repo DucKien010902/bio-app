@@ -64,7 +64,7 @@ const MobileMenu = () => {
       <View style={styles.menuSection}>
         <MenuItem icon={<AntDesign name="home" size={20} color="#1890ff" />} label="Cơ sở y tế" onPress={() => router.push('/(tabs)/home/clinics')} />
         <MenuItem icon={<AntDesign name="appstore-o" size={20} color="#1890ff" />} label="Dịch vụ y tế" onPress={() => router.push('/(tabs)/home/service')} />
-        <MenuItem icon={<AntDesign name="filetext1" size={20} color="#1890ff" />} label="Phiếu xét nghiệm" onPress={() => navigation.navigate('Tickets')} />
+        <MenuItem icon={<AntDesign name="filetext1" size={20} color="#1890ff" />} label="Phiếu xét nghiệm" onPress={() => router.push('/(tabs)/home/medicalTicket') }/>
         <MenuItem icon={<AntDesign name="bells" size={20} color="#1890ff" />} label="Thông báo" />
         <MenuItem icon={<AntDesign name="questioncircleo" size={20} color="#1890ff" />} label="Hướng dẫn" />
       </View>

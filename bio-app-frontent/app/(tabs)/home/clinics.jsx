@@ -1,6 +1,7 @@
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
   Image,
@@ -123,7 +124,7 @@ const ClinicListMobilePage = () => {
               style={styles.bookButton}
               onPress={(e) => {
                 e.stopPropagation?.();
-                handleNavigate('ClinicBooking', clinic.ID);
+                router.push('/(tabs)/home/booking')
               }}
             >
               <Text style={styles.bookButtonText}>Đặt khám ngay</Text>

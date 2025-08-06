@@ -66,7 +66,6 @@ const LoginScreen = () => {
 
       const user = res.data.user;
       const token = res.data.token;
-
       await AsyncStorage.setItem('user', JSON.stringify(user));
       await AsyncStorage.setItem('phoneNumber', user.phoneNumber);
       await AsyncStorage.setItem('token', token);
