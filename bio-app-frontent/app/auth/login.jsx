@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  ImageBackground,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -13,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
 import axiosClient from '../../api/apiConfig';
 
 const LoginScreen = () => {
@@ -83,72 +85,105 @@ const LoginScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.select({ ios: 'padding', android: undefined })}
-      style={styles.container}
+    <ImageBackground
+      source={{
+        uri: 'https://p16-hera-sg.larksuitecdn.com/tos-alisg-i-hn4qzgxq2n-sg/b2432d9ed2dc49b68258bf9f7bfae6fa.avif~tplv-hn4qzgxq2n-image-v1:0:0.image',
+      }}
+      style={styles.background}
+      resizeMode="cover" // tương đương background-size: cover
     >
-      <View style={styles.inner}>
-        <Text style={styles.logo}>GennovaX</Text>
-        <Text style={styles.subText}>Vui lòng đăng nhập để tiếp tục</Text>
+      <KeyboardAvoidingView
+        behavior={Platform.select({ ios: 'padding', android: undefined })}
+        style={styles.container}
+      >
+        <View style={styles.inner}>
+          <Text style={styles.logo}>GennovaX</Text>
+          <Text style={styles.subText}>Vui lòng đăng nhập để tiếp tục</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Nhập số điện thoại"
-          keyboardType="phone-pad"
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Nhập mật khẩu"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-          onSubmitEditing={handleLogin}
-        />
+          {/* Số điện thoại */}
+          <View style={styles.inputContainer}>
+            <Feather
+              name="phone"
+              size={20}
+              color="#888"
+              style={styles.inputIcon}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Nhập số điện thoại"
+              keyboardType="phone-pad"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+            />
+          </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          {loading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.buttonText}>Đăng nhập</Text>
-          )}
-        </TouchableOpacity>
+          {/* Mật khẩu */}
+          <View style={styles.inputContainer}>
+            <Feather
+              name="lock"
+              size={20}
+              color="#888"
+              style={styles.inputIcon}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Nhập mật khẩu"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+              onSubmitEditing={handleLogin}
+            />
+          </View>
 
-        {canUseBiometric && (
-          <TouchableOpacity
-            style={[styles.button, { backgroundColor: '#52c41a', marginTop: 12 }]}
-            onPress={handleBiometricLogin}
-          >
-            <Text style={styles.buttonText}>Đăng nhập bằng vân tay</Text>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Đăng nhập</Text>
+            )}
           </TouchableOpacity>
-        )}
 
-        <View style={styles.links}>
-          <Text
-            style={styles.link}
-            onPress={() => router.push('/auth/register')}
-          >
-            Đăng kí tài khoản 👈
-          </Text>
-          <Text
-            style={styles.link}
-            onPress={() =>
-              Alert.alert('Thông báo', 'Tính năng đang phát triển')
-            }
-          >
-            Quên mật khẩu ?
-          </Text>
+          {canUseBiometric && (
+            <TouchableOpacity
+              style={[
+                styles.button,
+                { backgroundColor: '#52c41a', marginTop: 12 },
+              ]}
+              onPress={handleBiometricLogin}
+            >
+              <Text style={styles.buttonText}>Đăng nhập bằng vân tay</Text>
+            </TouchableOpacity>
+          )}
+
+          <View style={styles.links}>
+            <Text
+              style={styles.link}
+              onPress={() => router.push('/auth/register')}
+            >
+              Đăng kí tài khoản 👈
+            </Text>
+            <Text
+              style={styles.link}
+              onPress={() =>
+                Alert.alert('Thông báo', 'Tính năng đang phát triển')
+              }
+            >
+              Quên mật khẩu ?
+            </Text>
+          </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#f0f2f5',
+    backgroundColor: 'rgba(240,242,245,0.5)', // overlay mờ để chữ dễ đọc
   },
   inner: {
     flex: 1,
@@ -169,16 +204,26 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     fontFamily: 'cursive',
   },
-  input: {
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     width: '100%',
     height: 50,
     backgroundColor: '#fff',
     borderRadius: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     marginBottom: 16,
     borderWidth: 1,
     borderColor: '#ccc',
   },
+  inputIcon: {
+    marginRight: 8,
+  },
+  input: {
+    flex: 1,
+    height: '100%',
+  },
+
   button: {
     backgroundColor: '#1890ff',
     paddingVertical: 14,

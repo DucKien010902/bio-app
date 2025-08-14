@@ -4,17 +4,16 @@
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
   },
-  "editor.formatOnSave": true,                  // Tự động format khi lưu
-  "editor.tabSize": 2,                           // Mỗi tab = 2 khoảng trắng
-  "editor.insertSpaces": true,                   // Dùng space thay vì tab
-  "editor.detectIndentation": false,             // Không tự đổi indent theo file
-  "files.trimTrailingWhitespace": true,          // Xóa khoảng trắng thừa cuối dòng
-  "files.insertFinalNewline": true,               // Thêm dòng trống cuối file
-  "files.trimFinalNewlines": true,                // Giữ đúng 1 dòng trống cuối file
-  "prettier.singleQuote": true,                   // Dùng nháy đơn
-  "prettier.trailingComma": "es5",                // Thêm dấu phẩy cuối nếu cần
-  "prettier.semi": true,                          // Luôn có dấu chấm phẩy
-  "prettier.printWidth": 100,                     // Giới hạn chiều dài 1 dòng
-  "prettier.tabWidth": 2                          // Tab = 2 space cho Prettier
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.semi": true,
+  "prettier.printWidth": 100,
+  "prettier.tabWidth": 2
 }
-

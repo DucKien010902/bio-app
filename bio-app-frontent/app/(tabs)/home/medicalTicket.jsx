@@ -2,13 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    Linking,
-    SafeAreaView, ScrollView, StyleSheet, Text,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Linking,
+  SafeAreaView, ScrollView, StyleSheet, Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import axiosClient from '../../../api/apiConfig'; // đường dẫn đúng theo project bạn
 import FooterComponent from '../../component/footer';
@@ -171,7 +171,7 @@ const MedicalTicketsScreen = () => {
     <ScrollView>
     <SafeAreaView style={styles.container}>
         <HeaderComponent/>
-      <View style={{ padding: 12 }}>
+      <View style={{ paddingHorizontal:24, paddingVertical:12 }}>
         <Text style={styles.pageTitle}>Lịch sử xét nghiệm</Text>
         {mockBookings.length === 0 ? (
           <EmptyBox />
@@ -180,7 +180,7 @@ const MedicalTicketsScreen = () => {
             data={mockBookings}
             keyExtractor={(item) => item.bookID || item._id || Math.random().toString()}
             renderItem={({ item }) => <TicketCard ticket={item} />}
-            ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+            ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 24 }}
           />
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   pageTitle: {
     fontSize: 18,
     fontWeight: '700',
-    marginBottom: 12,
+    marginBottom: 18,
   },
   card: {
     backgroundColor: '#fff',

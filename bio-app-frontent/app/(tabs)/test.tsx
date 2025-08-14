@@ -255,8 +255,8 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   content: { paddingHorizontal:24, paddingVertical:16 },
-  title: { fontSize: 20, fontWeight: '700', color: '#00b5f1', marginBottom: 4 },
-  subtitle: { color: '#666', marginBottom: 12 },
+  title: { fontSize: 20, fontWeight: '700', color: '#00b5f1', marginBottom: 4, textAlign:'center' },
+  subtitle: { color: '#666', marginBottom: 12, textAlign:'center' },
   rowCenter: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
   avatar: { backgroundColor: '#00b5f1', justifyContent: 'center', alignItems: 'center' },
   avatarText: { color: '#fff', fontSize: 28, fontWeight: '800' },
