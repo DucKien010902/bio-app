@@ -1,3 +1,4 @@
+import { closeMenuBio } from '@/redux/slices/openMenuSlice';
 import { AntDesign, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -12,13 +13,15 @@ import {
   View,
 } from 'react-native';
 import { Button, Divider } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 import FooterComponent from '../../component/footer';
 import HeaderComponent from '../../component/header';
+
 
 const MobileMenu = () => {
   const [user, setUser] = useState(null);
   const navigation = useNavigation();
-
+  const dispatch= useDispatch()
   useEffect(() => {
     const getUser = async () => {
       const data = await AsyncStorage.getItem('user');
@@ -32,6 +35,14 @@ const MobileMenu = () => {
     router.push('/auth/login');
     // navigation.navigate('Login');
   };
+  useEffect(() => {
+  const unsubscribe = navigation.addListener('blur', () => {
+    dispatch(closeMenuBio());
+  });
+
+  return unsubscribe;
+}, [navigation]);
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

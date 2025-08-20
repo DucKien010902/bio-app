@@ -1,20 +1,40 @@
+import { closeMenuBio, openMenuBio } from '@/redux/slices/openMenuSlice';
 import { useNavigation } from '@react-navigation/native';
-import { router } from 'expo-router';
+import { router, usePathname } from 'expo-router';
 import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
+import { useDispatch, useSelector } from 'react-redux';
 import gennovaXLogo from '../../assets/images/GennovaX-logo-tách-nền.png';
 
 const HeaderComponent = () => {
+  const pathname= usePathname()
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
-  const isOpenMenu = false;
   const isMobile = width < 768;
+  const dispatch = useDispatch();
+  const isOpenMenu = useSelector((state) => state.openMenu.IsOpenMenu);
 
   const handleLogoPress = () => {
     router.replace('/(tabs)/home');
   };
 
+  const toggleMenu = () => {
+    if (isOpenMenu) {
+      // nếu đang mở thì đóng
+      dispatch(closeMenuBio());
+      router.push('/(tabs)/home/home'); // hoặc router.replace('/(tabs)/home') nếu muốn quay về home khi đóng
+    } else {
+      // nếu đang đóng thì mở
+      dispatch(openMenuBio());
+      router.push('/(tabs)/home/menu');
+    }
+  };
+  // useEffect(()=>{
+  //   return()=>{
+  //     dispatch(closeMenuBio())
+  //   }
+  // },[])
   if (!isMobile) return null;
 
   return (
@@ -41,14 +61,8 @@ const HeaderComponent = () => {
           </TouchableOpacity>
 
           {/* Menu icon */}
-          <TouchableOpacity>
-            <Icon
-              name={isOpenMenu ? 'close' : 'bars'}
-              size={28}
-              onPress={() => {
-                router.push('/(tabs)/home/menu');
-              }}
-            />
+          <TouchableOpacity onPress={toggleMenu}>
+            <Icon name={isOpenMenu ? 'close' : 'bars'} size={28} />
           </TouchableOpacity>
         </View>
       </View>
