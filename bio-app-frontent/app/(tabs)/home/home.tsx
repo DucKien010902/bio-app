@@ -1,6 +1,8 @@
 import TypingInput from '@/app/component/inputHomepage';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -14,6 +16,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Avatar } from 'react-native-paper';
+import Carousel from 'react-native-reanimated-carousel';
+import YoutubePlayer from 'react-native-youtube-iframe';
 import axiosClient from '../../../api/apiConfig';
 import dichvu from '../../../assets/images/dichvu.png';
 import dichvu1 from '../../../assets/images/dichvu1.png';
@@ -155,7 +160,7 @@ const TestScreen = () => {
     }
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { width } = Dimensions.get('window');
   useEffect(() => {
     const checkModalShown = async () => {
       try {
@@ -365,6 +370,221 @@ const TestScreen = () => {
                 </ScrollView>
               </View>
             </ImageBackground>
+            <View style={styles.container1}>
+              <Carousel
+                loop
+                autoPlay
+                autoPlayInterval={3000}
+                width={width * 0.95} // 90% màn hình
+                height={(width * 0.95 * 2) / 5} // ví dụ giữ tỷ lệ 16:9
+                data={bannerImagesMobile}
+                renderItem={({ item, index }) => (
+                  <View key={index} style={styles.slide}>
+                    <Image source={{ uri: item }} style={styles.image1} />
+                  </View>
+                )}
+              />
+            </View>
+            <LinearGradient
+              colors={['white', '#e8f8fd', '#e8f8fd', 'white']}
+              start={{ x: 0.5, y: 0 }}
+              end={{ x: 0.5, y: 1 }}
+              style={styles.gradient2}
+            >
+              <Text style={styles.title2}>Cơ sở y tế được yêu thích</Text>
+
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.scrollContainer2}
+              >
+                {clinicList.map((clinic, i) => (
+                  <View key={i} style={styles.card2}>
+                    {/* Logo */}
+                    <View style={styles.logoWrapper2}>
+                      <Image
+                        source={{
+                          uri: 'https://www.thanhcongclinic.com/images/logo.png',
+                        }}
+                        style={styles.logo2}
+                        resizeMode="contain"
+                      />
+                    </View>
+
+                    {/* Name + Verified */}
+                    <View style={styles.nameRow2}>
+                      <Text style={styles.name2}>
+                        {clinic.name}
+                        {'  '}
+                        {clinic.verified && (
+                          <AntDesign
+                            name="checkcircle"
+                            size={16}
+                            color="#1890ff"
+                            style={{ marginLeft: 0 }}
+                          />
+                        )}
+                      </Text>
+                    </View>
+
+                    {/* Address */}
+                    <Text
+                      style={styles.address2}
+                      numberOfLines={3}
+                      ellipsizeMode="tail"
+                    >
+                      <Entypo name="location-pin" size={16} color="#003553" />
+                      {'  '}
+                      {clinic.address}
+                    </Text>
+
+                    {/* Rating */}
+                    <View style={styles.ratingRow2}>
+                      <Text style={{ marginRight: 6 }}>(5)</Text>
+                      {[...Array(clinic.rating)].map((_, idx) => (
+                        <FontAwesome
+                          key={idx}
+                          name="star"
+                          size={14}
+                          color="#ffb54a"
+                          style={{ marginRight: 2 }}
+                        />
+                      ))}
+                    </View>
+
+                    {/* Button */}
+                    <TouchableOpacity style={styles.button2}>
+                      <Text style={styles.buttonText2}>Xem chi tiết</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </ScrollView>
+            </LinearGradient>
+            <View
+              style={{
+                backgroundColor: 'white',
+              }}
+            >
+              {/* Gradient background ở RN không hỗ trợ trực tiếp CSS, dùng expo-linear-gradient */}
+              <View
+                style={{
+                  backgroundColor: '#e8f8fd',
+                  paddingVertical: 20,
+                }}
+              >
+                <Text style={styles.title3}>Các dịch vụ xét nghiệm</Text>
+
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.scrollContainer3}
+                >
+                  {serviceList.map((service, i) => (
+                    <View key={i} style={styles.cardWrapper3}>
+                      <View style={styles.card3}>
+                        {/* Ảnh */}
+                        <Image
+                          source={{ uri: service.image }}
+                          style={styles.image3}
+                          resizeMode="contain"
+                        />
+
+                        <View style={styles.content3}>
+                          {/* Tên dịch vụ */}
+                          <Text numberOfLines={2} style={styles.serviceName3}>
+                            {service.name}{' '}
+                            {service.verified && (
+                              <AntDesign
+                                name="checkcircle"
+                                size={14}
+                                color="#1890ff"
+                              />
+                            )}
+                          </Text>
+
+                          {/* Clinic */}
+                          <View style={styles.row3}>
+                            <Entypo
+                              name="home"
+                              size={15}
+                              color="#003553"
+                              style={{ marginRight: 6 }}
+                            />
+                            <Text style={styles.clinic3}>{service.clinic}</Text>
+                          </View>
+
+                          {/* Giá */}
+                          <View style={styles.row3}>
+                            <FontAwesome5
+                              name="comment-dollar"
+                              size={15}
+                              color="#003553"
+                              style={{ marginRight: 6 }}
+                            />
+
+                            <Text style={styles.price3}>
+                              {service.price.toString()}.000đ
+                            </Text>
+                          </View>
+
+                          {/* Button */}
+                          <TouchableOpacity
+                            style={styles.button3}
+                            onPress={() =>
+                              navigation.navigate('BookingScreen', {
+                                code: service.id,
+                              })
+                            }
+                          >
+                            <Text style={styles.buttonText3}>
+                              Đặt khám ngay
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+            </View>
+            <LinearGradient
+              colors={['white', '#e8f8fd', '#e8f8fd', 'white']}
+              style={styles.container4}
+            >
+              <Text style={styles.title4}>Cảm nhận từ khách hàng</Text>
+
+              <View style={styles.card4}>
+                <View style={styles.quote4}>
+                  <FontAwesome name="quote-left" size={20} color="#ccc" />
+                </View>
+
+                <Text style={styles.feedbackText4}>
+                  Đặt lịch xét nghiệm bên này rất gọn, có ngày giờ cụ thể luôn
+                  lên là được xét nghiệm liền không rườm rà gì mấy. An tâm đặt
+                  cho gia đình, có cả xét nghiệm tận nhà, không mất thời gian.
+                </Text>
+
+                <View style={styles.divider4} />
+
+                <View style={styles.userRow4}>
+                  <Avatar.Image
+                    size={40}
+                    source={{
+                      uri: 'https://i.pinimg.com/736x/b7/91/44/b79144e03dc4996ce319ff59118caf65.jpg',
+                    }}
+                  />
+                  <Text style={styles.userName4}>Kiên Nguyễn</Text>
+                </View>
+              </View>
+            </LinearGradient>
+            <View style={styles.container5}>
+              <YoutubePlayer
+                height={180}
+                width={width * 0.9}
+                play={false} // mặc định không tự động phát, đổi thành true nếu muốn autoplay
+                videoId={'qb9kSd-e8_s'}
+              />
+            </View>
           </View>
         </View>
       </>
@@ -493,12 +713,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     textAlign: 'center',
   },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#0071bc',
-    marginBottom: 8,
-  },
   desc: {
     fontSize: 14,
     lineHeight: 20,
@@ -519,7 +733,7 @@ const styles = StyleSheet.create({
     padding: 12,
     alignItems: 'center',
     textAlign: 'center',
-    marginBottom: 24,
+    // marginBottom: 24,
     overflow: 'hidden',
   },
   title: {
@@ -540,7 +754,7 @@ const styles = StyleSheet.create({
   },
   carouselWrapper: {
     width: '100%',
-    marginTop: 40,
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 12,
@@ -574,5 +788,221 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     color: '#065c8c',
+  },
+  container1: {
+    width: '95%',
+    alignSelf: 'center',
+    marginVertical: 10,
+  },
+  slide: {
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  image1: {
+    width: '100%',
+    height: '100%', // chiếm hết Carousel
+    resizeMode: 'cover', // giống object-fit: cover
+    // borderRadius: 5,
+  },
+  gradient2: {
+    flex: 1,
+    paddingVertical: 15,
+  },
+  title2: {
+    fontWeight: '600',
+    fontSize: 18,
+    color: '#065c8c',
+    marginBottom: 20,
+    textAlign: 'center',
+    textShadowColor: 'rgba(0,0,0,0.1)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+  },
+  scrollContainer2: {
+    paddingHorizontal: 10,
+  },
+  card2: {
+    width: 200,
+    backgroundColor: 'white',
+    borderRadius: 16,
+    padding: 12,
+    marginHorizontal: 6,
+    shadowColor: '#00bfff',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  logoWrapper2: {
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  logo2: {
+    width: 150,
+    height: 80,
+  },
+  nameRow2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  name2: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#000',
+    lineHeight: 18, // chiều cao 1 dòng
+    height: 18 * 2.5, // đúng 3 dòng
+  },
+  address2: {
+    color: '#003553',
+    fontSize: 13,
+    fontWeight: '500',
+    marginBottom: 8,
+    lineHeight: 18, // chiều cao 1 dòng
+    height: 18 * 3, // đúng 4 dòng
+  },
+
+  ratingRow2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  button2: {
+    backgroundColor: '#00bfff',
+    borderRadius: 8,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText2: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  title3: {
+    fontWeight: '600',
+    fontSize: 18,
+    color: '#065c8c',
+    marginBottom: 20,
+    textAlign: 'center',
+    textShadowColor: 'rgba(0,0,0,0.1)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+  },
+  scrollContainer3: {
+    paddingHorizontal: 15,
+  },
+  cardWrapper3: {
+    width: 200,
+    marginRight: 12,
+  },
+  card3: {
+    borderRadius: 16,
+    backgroundColor: 'white',
+    overflow: 'hidden',
+    shadowColor: '#00bfff',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  image3: {
+    width: '100%',
+    height: 100,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+  },
+  content3: {
+    padding: 10,
+  },
+  serviceName3: {
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 20,
+    height: 40, // đúng 2 dòng
+    marginBottom: 8,
+    color: '#000',
+  },
+  row3: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  clinic3: {
+    color: '#003553',
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  price3: {
+    color: '#003553',
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  button3: {
+    backgroundColor: '#00bfff',
+    borderRadius: 8,
+    paddingVertical: 6,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  buttonText3: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  container4: {
+    paddingVertical: 20,
+  },
+  title4: {
+    fontSize: 18,
+    marginVertical: 20,
+    color: '#065c8c',
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  card4: {
+    width: '90%',
+    alignSelf: 'center',
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: '#f4f9fd',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 5,
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  quote4: {
+    fontSize: 24,
+    color: '#ccc',
+    marginBottom: 10,
+  },
+  feedbackText4: {
+    fontSize: 16,
+    color: '#2b4263',
+    lineHeight: 24,
+    textAlign: 'center',
+  },
+  divider4: {
+    height: 1,
+    backgroundColor: '#ddd',
+    width: '90%',
+    marginVertical: 16,
+  },
+  userRow4: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  userName4: {
+    marginLeft: 8,
+    fontWeight: 'bold',
+    fontSize: 14,
+    color: '#2b4263',
+  },
+  container5: {
+    marginVertical: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
