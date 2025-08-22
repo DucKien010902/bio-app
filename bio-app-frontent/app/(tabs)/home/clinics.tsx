@@ -115,7 +115,11 @@ const ClinicListMobilePage = () => {
               style={styles.detailButton}
               onPress={(e) => {
                 e.stopPropagation?.();
-                handleNavigate('ClinicDetail', clinic.ID);
+                router.push({
+                  pathname: "/(tabs)/home/detailClinic",
+                  params: { ID: clinic.ID }
+                });
+
               }}
             >
               <Text style={styles.detailButtonText}>Xem chi tiết</Text>

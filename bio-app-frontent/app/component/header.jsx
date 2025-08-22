@@ -5,7 +5,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } 
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
-import gennovaXLogo from '../../assets/images/GennovaX-logo-tách-nền.png';
+import gennovaXLogo from '../../assets/images/GenApp logo.png';
 
 const HeaderComponent = () => {
   const pathname= usePathname()
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingVertical: 0,
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
     flexDirection: 'row',
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    height: 70,
-    width: 120,
+    height: 50,
+    width: 100,
   },
   iconContainer: {
     flexDirection: 'row',

@@ -4,19 +4,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    Modal,
-    Pressable,
-    SafeAreaView,
-    ScrollView,
-    SectionList,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Modal,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  SectionList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import axiosClient from '../../../api/apiConfig'; // giữ nguyên cấu hình axios của bạn
@@ -52,6 +52,7 @@ const BookingPageMobile = ({ route, navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || '');
   const [address, setAddress] = useState(user?.address || '');
   const [dob, setDob] = useState(null); // YYYY-MM-DD
+  const [email,setEmail] = useState(null); // YYYY-MM-DD
 
   const [allclinics, setAllclinics] = useState([]);
   const [services, setServices] = useState([]); // grouped: [{ typeName, packages: [{ code, name }] }]
@@ -307,6 +308,7 @@ const BookingPageMobile = ({ route, navigation }) => {
             <TextInput style={styles.input} placeholder="Họ và tên" value={fullName} onChangeText={setFullName} />
             <TextInput style={styles.input} placeholder="Số điện thoại" keyboardType="phone-pad" value={phoneNumber} onChangeText={setPhoneNumber} />
             <TextInput style={styles.input} placeholder="Địa chỉ" value={address} onChangeText={setAddress} />
+            <TextInput style={styles.input} placeholder="Email liên hệ" value={email} onChangeText={setEmail} />
             <TouchableOpacity
               style={styles.select}
               onPress={() => {

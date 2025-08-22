@@ -1,16 +1,16 @@
 import FooterComponent from '@/app/component/footer';
 import HeaderComponent from '@/app/component/header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-    Dimensions,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View
+  Dimensions,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
 } from 'react-native';
 import { Button, RadioButton } from 'react-native-paper';
 
@@ -132,7 +132,7 @@ const ServicePageMobile = () => {
               <Button
                 mode="contained"
                 onPress={() =>
-                  navigation.navigate('datlich', { code: service.code })
+                  router.push('/(tabs)/home/booking')
                 }
               >
                 Đặt khám
