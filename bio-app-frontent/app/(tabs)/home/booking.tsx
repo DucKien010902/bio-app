@@ -43,7 +43,9 @@ const BookingPageMobile = ({ route, navigation }) => {
   }, []);
 
   // Form state
-  const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD')); // ISO
+  const [selectedDate, setSelectedDate] = useState(
+    dayjs().format('YYYY-MM-DD')
+  ); // ISO
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedFacility, setSelectedFacility] = useState(null); // string name
   const [selectedService, setSelectedService] = useState(null); // service code
@@ -52,7 +54,7 @@ const BookingPageMobile = ({ route, navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || '');
   const [address, setAddress] = useState(user?.address || '');
   const [dob, setDob] = useState(null); // YYYY-MM-DD
-  const [email,setEmail] = useState(null); // YYYY-MM-DD
+  const [email, setEmail] = useState(null); // YYYY-MM-DD
 
   const [allclinics, setAllclinics] = useState([]);
   const [services, setServices] = useState([]); // grouped: [{ typeName, packages: [{ code, name }] }]
@@ -124,7 +126,9 @@ const BookingPageMobile = ({ route, navigation }) => {
     if (!allclinics || !services.length) return;
 
     const filteredClinics = selectedService
-      ? allclinics.filter((clinic) => clinic.listService.includes(selectedService))
+      ? allclinics.filter((clinic) =>
+          clinic.listService.includes(selectedService)
+        )
       : allclinics;
     setFilteredFacilities(filteredClinics.map((c) => c.name));
 
@@ -167,13 +171,27 @@ const BookingPageMobile = ({ route, navigation }) => {
   };
 
   const validateAndSubmit = async () => {
-    if (!fullName || !phoneNumber || !address || !dob || !selectedDate || !selectedTime || !selectedFacility || !selectedService) {
-      Alert.alert('Thiếu thông tin', 'Vui lòng nhập đầy đủ thông tin cá nhân và lịch hẹn.');
+    if (
+      !fullName ||
+      !phoneNumber ||
+      !address ||
+      !dob ||
+      !selectedDate ||
+      !selectedTime ||
+      !selectedFacility ||
+      !selectedService
+    ) {
+      Alert.alert(
+        'Thiếu thông tin',
+        'Vui lòng nhập đầy đủ thông tin cá nhân và lịch hẹn.'
+      );
       return;
     }
 
     // find facility ID
-    const selectedFacilityObj = allclinics.find((c) => c.name === selectedFacility);
+    const selectedFacilityObj = allclinics.find(
+      (c) => c.name === selectedFacility
+    );
     const selectedFacilityID = selectedFacilityObj?.ID || null;
 
     // find service name
@@ -227,7 +245,10 @@ const BookingPageMobile = ({ route, navigation }) => {
 
   // Renderers
   const renderFacilityRow = ({ item }) => (
-    <Pressable onPress={() => handleSelectFacility(item)} style={styles.optionRow}>
+    <Pressable
+      onPress={() => handleSelectFacility(item)}
+      style={styles.optionRow}
+    >
       <Text style={styles.optionText}>{item}</Text>
     </Pressable>
   );
@@ -236,7 +257,11 @@ const BookingPageMobile = ({ route, navigation }) => {
     <View style={{ paddingVertical: 8 }}>
       <Text style={styles.sectionHeader}>{section.title}</Text>
       {section.data.map((pkg) => (
-        <Pressable key={pkg.code} onPress={() => handleSelectService(pkg.code)} style={styles.optionRow}>
+        <Pressable
+          key={pkg.code}
+          onPress={() => handleSelectService(pkg.code)}
+          style={styles.optionRow}
+        >
           <Text style={styles.optionText}>{pkg.name}</Text>
         </Pressable>
       ))}
@@ -245,27 +270,46 @@ const BookingPageMobile = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView >
-        <HeaderComponent/>
+      <ScrollView>
+        <HeaderComponent />
         <View style={styles.card}>
           <Text style={styles.title}>Đặt lịch xét nghiệm</Text>
 
           <View style={styles.field}>
             <Text style={styles.label}>Cơ sở xét nghiệm</Text>
-            <TouchableOpacity style={styles.select} onPress={() => handleOpenModal('facility')}>
-              <Text style={[styles.selectText, !selectedFacility && styles.placeholder]}>{selectedFacility || 'Chọn cơ sở'}</Text>
+            <TouchableOpacity
+              style={styles.select}
+              onPress={() => handleOpenModal('facility')}
+            >
+              <Text
+                style={[
+                  styles.selectText,
+                  !selectedFacility && styles.placeholder,
+                ]}
+              >
+                {selectedFacility || 'Chọn cơ sở'}
+              </Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.field}>
             <Text style={styles.label}>Dịch vụ xét nghiệm</Text>
-            <TouchableOpacity style={styles.select} onPress={() => handleOpenModal('service')}>
-              <Text style={[styles.selectText, !selectedService && styles.placeholder]}>
+            <TouchableOpacity
+              style={styles.select}
+              onPress={() => handleOpenModal('service')}
+            >
+              <Text
+                style={[
+                  styles.selectText,
+                  !selectedService && styles.placeholder,
+                ]}
+              >
                 {selectedService
                   ? // show service name
                     services
                       .flatMap((g) => g.packages)
-                      .find((p) => p.code === selectedService)?.name || selectedService
+                      .find((p) => p.code === selectedService)?.name ||
+                    selectedService
                   : 'Chọn dịch vụ'}
               </Text>
             </TouchableOpacity>
@@ -285,7 +329,9 @@ const BookingPageMobile = ({ route, navigation }) => {
                 textDayFontWeight: '700',
               }}
             />
-            <Text style={styles.selectedDateText}>Đã chọn: {dayjs(selectedDate).format('DD/MM/YYYY')}</Text>
+            <Text style={styles.selectedDateText}>
+              Đã chọn: {dayjs(selectedDate).format('DD/MM/YYYY')}
+            </Text>
           </View>
 
           <View style={styles.field}>
@@ -294,10 +340,20 @@ const BookingPageMobile = ({ route, navigation }) => {
               {timeSlots.map((slot) => (
                 <TouchableOpacity
                   key={slot}
-                  style={[styles.timeButton, selectedTime === slot && styles.timeButtonActive]}
+                  style={[
+                    styles.timeButton,
+                    selectedTime === slot && styles.timeButtonActive,
+                  ]}
                   onPress={() => setSelectedTime(slot)}
                 >
-                  <Text style={[styles.timeText, selectedTime === slot && styles.timeTextActive]}>{slot}</Text>
+                  <Text
+                    style={[
+                      styles.timeText,
+                      selectedTime === slot && styles.timeTextActive,
+                    ]}
+                  >
+                    {slot}
+                  </Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -305,53 +361,107 @@ const BookingPageMobile = ({ route, navigation }) => {
 
           <View style={styles.field}>
             <Text style={styles.label}>Thông tin cá nhân</Text>
-            <TextInput style={styles.input} placeholder="Họ và tên" value={fullName} onChangeText={setFullName} />
-            <TextInput style={styles.input} placeholder="Số điện thoại" keyboardType="phone-pad" value={phoneNumber} onChangeText={setPhoneNumber} />
-            <TextInput style={styles.input} placeholder="Địa chỉ" value={address} onChangeText={setAddress} />
-            <TextInput style={styles.input} placeholder="Email liên hệ" value={email} onChangeText={setEmail} />
+            <TextInput
+              style={styles.input}
+              placeholder="Họ và tên"
+              value={fullName}
+              onChangeText={setFullName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Số điện thoại"
+              keyboardType="phone-pad"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Địa chỉ"
+              value={address}
+              onChangeText={setAddress}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Email liên hệ"
+              value={email}
+              onChangeText={setEmail}
+            />
             <TouchableOpacity
               style={styles.select}
               onPress={() => {
                 // show simple date input via built-in prompt or another modal — for simplicity we set to today if null
                 // You can replace with a DatePicker modal lib for a better UX
-                const newDob = dayjs().subtract(20, 'year').format('YYYY-MM-DD');
+                const newDob = dayjs()
+                  .subtract(20, 'year')
+                  .format('YYYY-MM-DD');
                 setDob(newDob);
-                Alert.alert('Chọn ngày sinh', 'Demo: đã đặt ngày sinh tạm — bạn có thể tích hợp DatePicker modal', [{ text: 'OK' }]);
+                Alert.alert(
+                  'Chọn ngày sinh',
+                  'Demo: đã đặt ngày sinh tạm — bạn có thể tích hợp DatePicker modal',
+                  [{ text: 'OK' }]
+                );
               }}
             >
-              <Text style={[styles.selectText, !dob && styles.placeholder]}>{dob ? dayjs(dob).format('DD/MM/YYYY') : 'Ngày sinh'}</Text>
+              <Text style={[styles.selectText, !dob && styles.placeholder]}>
+                {dob ? dayjs(dob).format('DD/MM/YYYY') : 'Ngày sinh'}
+              </Text>
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.bookingButton} onPress={validateAndSubmit} disabled={loading}>
-            {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.bookingButtonText}>Đặt lịch ngay</Text>}
+          <TouchableOpacity
+            style={styles.bookingButton}
+            onPress={validateAndSubmit}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.bookingButtonText}>Đặt lịch ngay</Text>
+            )}
           </TouchableOpacity>
         </View>
-        <FooterComponent/>
+        <FooterComponent />
       </ScrollView>
 
       {/* Modal for select options */}
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalBackdrop}>
           <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>{modalMode === 'facility' ? 'Chọn cơ sở' : 'Chọn dịch vụ'}</Text>
+            <Text style={styles.modalTitle}>
+              {modalMode === 'facility' ? 'Chọn cơ sở' : 'Chọn dịch vụ'}
+            </Text>
             <View style={{ height: 12 }} />
             {modalMode === 'facility' ? (
-              <FlatList data={filteredFacilities} keyExtractor={(i) => i} renderItem={renderFacilityRow} />
+              <FlatList
+                data={filteredFacilities}
+                keyExtractor={(i) => i}
+                renderItem={renderFacilityRow}
+              />
             ) : (
               <SectionList
-                sections={filteredServices.map((g) => ({ title: g.typeName, data: g.packages }))}
+                sections={filteredServices.map((g) => ({
+                  title: g.typeName,
+                  data: g.packages,
+                }))}
                 keyExtractor={(item) => item.code}
                 renderItem={({ item }) => (
-                  <Pressable onPress={() => handleSelectService(item.code)} style={styles.optionRow}>
+                  <Pressable
+                    onPress={() => handleSelectService(item.code)}
+                    style={styles.optionRow}
+                  >
                     <Text style={styles.optionText}>{item.name}</Text>
                   </Pressable>
                 )}
-                renderSectionHeader={({ section: { title } }) => <Text style={styles.sectionHeader}>{title}</Text>}
+                renderSectionHeader={({ section: { title } }) => (
+                  <Text style={styles.sectionHeader}>{title}</Text>
+                )}
               />
             )}
 
-            <Pressable style={styles.modalClose} onPress={() => setModalVisible(false)}>
+            <Pressable
+              style={styles.modalClose}
+              onPress={() => setModalVisible(false)}
+            >
               <Text style={{ color: '#1890ff', fontWeight: '700' }}>Đóng</Text>
             </Pressable>
           </View>
@@ -368,15 +478,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     // borderRadius: 12,
     paddingVertical: 16,
-  paddingHorizontal: 24,
+    paddingHorizontal: 24,
     elevation: 2,
     shadowColor: '#000',
     shadowOpacity: 0.05,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 8,
   },
-  title: { fontSize: 20, fontWeight: '700', textAlign: 'center', color: '#00b5f1', marginBottom: 12 },
-  field: { marginBottom: 12, },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: '#00b5f1',
+    marginBottom: 12,
+  },
+  field: { marginBottom: 12 },
   label: { fontWeight: '700', marginBottom: 8, color: '#333' },
   select: {
     borderWidth: 1,
@@ -397,7 +513,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   selectedDateText: { marginTop: 8, color: '#4caf50', fontWeight: '700' },
-  timeContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent:'space-evenly' },
+  timeContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    justifyContent: 'space-evenly',
+  },
   timeButton: {
     paddingVertical: 10,
     paddingHorizontal: 12,
@@ -435,8 +556,16 @@ const styles = StyleSheet.create({
     maxHeight: '70%',
   },
   modalTitle: { fontWeight: '700', fontSize: 16, marginBottom: 6 },
-  optionRow: { paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
+  optionRow: {
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
   optionText: { fontSize: 16, fontWeight: '600' },
-  sectionHeader: { fontWeight: '800', paddingVertical: 8, backgroundColor: '#fff' },
+  sectionHeader: {
+    fontWeight: '800',
+    paddingVertical: 8,
+    backgroundColor: '#fff',
+  },
   modalClose: { alignSelf: 'center', padding: 12, marginTop: 8 },
 });

@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { router } from 'expo-router';
@@ -14,7 +15,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
 import axiosClient from '../../api/apiConfig';
 
 const LoginScreen = () => {
@@ -22,6 +22,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [canUseBiometric, setCanUseBiometric] = useState(false);
+  const [secure, setSecure] = useState(true);
 
   useEffect(() => {
     const checkStoredCredentials = async () => {
@@ -101,38 +102,57 @@ const LoginScreen = () => {
           <Text style={styles.subText}>Vui lòng đăng nhập để tiếp tục</Text>
 
           {/* Số điện thoại */}
-          <View style={styles.inputContainer}>
-            <Feather
-              name="phone"
-              size={20}
-              color="#888"
-              style={styles.inputIcon}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Nhập số điện thoại"
-              keyboardType="phone-pad"
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-            />
+          {/* Số điện thoại */}
+          <View style={{ width: '100%', marginBottom: 0 }}>
+            <Text style={styles.label}>Số điện thoại:</Text>
+            <View style={styles.inputContainer}>
+              <Feather
+                name="phone"
+                size={20}
+                color="#888"
+                style={styles.inputIcon}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Nhập số điện thoại"
+                placeholderTextColor="#888"
+                keyboardType="phone-pad"
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+              />
+            </View>
           </View>
 
           {/* Mật khẩu */}
-          <View style={styles.inputContainer}>
-            <Feather
-              name="lock"
-              size={20}
-              color="#888"
-              style={styles.inputIcon}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Nhập mật khẩu"
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword}
-              onSubmitEditing={handleLogin}
-            />
+          <View style={{ width: '100%', marginBottom: 16 }}>
+            <Text style={styles.label}>Mật khẩu:</Text>
+            <View style={styles.inputContainer}>
+              <Feather
+                name="lock"
+                size={20}
+                color="#888"
+                style={styles.inputIcon}
+              />
+
+              <TextInput
+                style={styles.input}
+                placeholder="Nhập mật khẩu"
+                placeholderTextColor="#888"
+                secureTextEntry={secure}
+                value={password}
+                onChangeText={setPassword}
+                onSubmitEditing={handleLogin}
+              />
+
+              <TouchableOpacity onPress={() => setSecure(!secure)}>
+                <Feather
+                  name={secure ? 'eye-off' : 'eye'}
+                  size={20}
+                  color="#888"
+                  style={{ paddingHorizontal: 8 }}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
@@ -197,7 +217,7 @@ const styles = StyleSheet.create({
     color: '#1890ff',
     textAlign: 'center',
     marginBottom: 8,
-    fontFamily: 'cursive',
+    // fontFamily: 'cursive',
   },
   subText: {
     textAlign: 'center',
@@ -222,6 +242,12 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: '100%',
+  },
+  label: {
+    marginBottom: 6,
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#333',
   },
 
   button: {

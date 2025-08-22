@@ -9,10 +9,12 @@ import {
   Image,
   Platform,
   SafeAreaView,
-  ScrollView, StyleSheet, Text,
+  ScrollView,
+  StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import FooterComponent from '../component/footer';
 import HeaderComponent from '../component/header';
@@ -30,7 +32,7 @@ const Avatar = ({ name, url, size = 80 }) => {
         backgroundColor: '#ccc',
         justifyContent: 'center',
         alignItems: 'center',
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}
     >
       {url ? (
@@ -39,7 +41,7 @@ const Avatar = ({ name, url, size = 80 }) => {
           style={{
             width: size,
             height: size,
-            borderRadius: size / 2
+            borderRadius: size / 2,
           }}
           resizeMode="cover"
         />
@@ -48,7 +50,7 @@ const Avatar = ({ name, url, size = 80 }) => {
           style={{
             color: '#fff',
             fontSize: size / 3,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
           }}
         >
           {initial}
@@ -64,12 +66,16 @@ const RadioOption = ({ label, value, selected, onPress }) => (
     style={[styles.radioOption, selected && styles.radioOptionSelected]}
     activeOpacity={0.8}
   >
-    <View style={[styles.radioCircle, selected && styles.radioCircleSelected]} />
-    <Text style={[styles.radioLabel, selected && styles.radioLabelSelected]}>{label}</Text>
+    <View
+      style={[styles.radioCircle, selected && styles.radioCircleSelected]}
+    />
+    <Text style={[styles.radioLabel, selected && styles.radioLabelSelected]}>
+      {label}
+    </Text>
   </TouchableOpacity>
 );
 
-const ProfileScreen =() => {
+const ProfileScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
 
@@ -80,7 +86,7 @@ const ProfileScreen =() => {
   const [address, setAddress] = useState('');
   const [gender, setGender] = useState('male'); // male | female | other
   const [birthday, setBirthday] = useState(null); // JS Date or null
-  const [avatarImage,setAvatarImage]= useState(null)
+  const [avatarImage, setAvatarImage] = useState(null);
   // date picker state
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -95,7 +101,7 @@ const ProfileScreen =() => {
           setEmail(user.email || '');
           setAddress(user.address || '');
           setGender(user.gender || 'male');
-          setAvatarImage(user.avatarImage||null)
+          setAvatarImage(user.avatarImage || null);
           if (user.birthday) {
             // try parsing dd/MM/YYYY or ISO
             const parts = user.birthday.split('/');
@@ -152,7 +158,7 @@ const ProfileScreen =() => {
         onPress: async () => {
           try {
             // await AsyncStorage.removeItem('user');
-            router.push('/auth/login')
+            router.push('/auth/login');
           } catch (err) {
             console.warn('Logout err', err);
           }
@@ -177,7 +183,12 @@ const ProfileScreen =() => {
 
   if (loading) {
     return (
-      <SafeAreaView style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+      >
         <ActivityIndicator size="large" color="#1890ff" />
       </SafeAreaView>
     );
@@ -185,67 +196,109 @@ const ProfileScreen =() => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView  keyboardShouldPersistTaps="handled">
+      <ScrollView keyboardShouldPersistTaps="handled">
         <HeaderComponent />
         <View style={styles.content}>
-        <Text style={styles.title}>Hồ Sơ Của Tôi</Text>
-        <Text style={styles.subtitle}>Quản lý thông tin hồ sơ để bảo mật tài khoản</Text>
+          <Text style={styles.title}>Hồ Sơ Của Tôi</Text>
+          <Text style={styles.subtitle}>
+            Quản lý thông tin hồ sơ để bảo mật tài khoản
+          </Text>
 
-        <View style={styles.rowCenter}>
-          <Avatar name={fullName} url={avatarImage} size={84}  />
-          <View style={{ marginLeft: 12, flex: 1 }}>
-            <Text style={styles.nameText}>{fullName || 'Chưa có tên'}</Text>
-            <Text style={styles.smallText}>{phoneNumber || 'Chưa có số điện thoại'}</Text>
-          </View>
-        </View>
-
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Số điện thoại</Text>
-          <TextInput style={styles.input} value={phoneNumber} onChangeText={setPhoneNumber} keyboardType="phone-pad" />
-
-          <Text style={styles.label}>Tên</Text>
-          <TextInput style={styles.input} value={fullName} onChangeText={setFullName} />
-
-          <Text style={styles.label}>Email</Text>
-          <TextInput style={styles.input} value={email} onChangeText={setEmail} keyboardType="email-address" />
-
-          <Text style={styles.label}>Địa chỉ</Text>
-          <TextInput style={styles.input} value={address} onChangeText={setAddress} />
-
-          <Text style={styles.label}>Giới tính</Text>
-          <View style={{ flexDirection: 'row', marginBottom: 8 }}>
-            <RadioOption label="Nam" value="male" selected={gender === 'male'} onPress={setGender} />
-            <RadioOption label="Nữ" value="female" selected={gender === 'female'} onPress={setGender} />
-            <RadioOption label="Khác" value="other" selected={gender === 'other'} onPress={setGender} />
+          <View style={styles.rowCenter}>
+            <Avatar name={fullName} url={avatarImage} size={84} />
+            <View style={{ marginLeft: 12, flex: 1 }}>
+              <Text style={styles.nameText}>{fullName || 'Chưa có tên'}</Text>
+              <Text style={styles.smallText}>
+                {phoneNumber || 'Chưa có số điện thoại'}
+              </Text>
+            </View>
           </View>
 
-          <Text style={styles.label}>Ngày sinh</Text>
-          <TouchableOpacity style={styles.select} onPress={() => setShowDatePicker(true)}>
-            <Text style={[styles.selectText, !birthday && styles.placeholder]}>
-              {birthday ? formatDateDDMMYYYY(birthday) : 'Chọn ngày sinh'}
-            </Text>
-          </TouchableOpacity>
-
-          {showDatePicker && (
-            <DateTimePicker
-              value={birthday || new Date(1990, 0, 1)}
-              mode="date"
-              display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
-              maximumDate={new Date()}
-              onChange={onChangeDate}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Số điện thoại</Text>
+            <TextInput
+              style={styles.input}
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              keyboardType="phone-pad"
             />
-          )}
 
-          <TouchableOpacity style={styles.saveButton} onPress={onSave}>
-            <Text style={styles.saveButtonText}>Lưu</Text>
-          </TouchableOpacity>
+            <Text style={styles.label}>Tên</Text>
+            <TextInput
+              style={styles.input}
+              value={fullName}
+              onChangeText={setFullName}
+            />
 
-          <TouchableOpacity style={styles.logoutButton} onPress={onLogout}>
-            <Text style={styles.logoutButtonText}>Đăng xuất</Text>
-          </TouchableOpacity>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+            />
+
+            <Text style={styles.label}>Địa chỉ</Text>
+            <TextInput
+              style={styles.input}
+              value={address}
+              onChangeText={setAddress}
+            />
+
+            <Text style={styles.label}>Giới tính</Text>
+            <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+              <RadioOption
+                label="Nam"
+                value="male"
+                selected={gender === 'male'}
+                onPress={setGender}
+              />
+              <RadioOption
+                label="Nữ"
+                value="female"
+                selected={gender === 'female'}
+                onPress={setGender}
+              />
+              <RadioOption
+                label="Khác"
+                value="other"
+                selected={gender === 'other'}
+                onPress={setGender}
+              />
+            </View>
+
+            <Text style={styles.label}>Ngày sinh</Text>
+            <TouchableOpacity
+              style={styles.select}
+              onPress={() => setShowDatePicker(true)}
+            >
+              <Text
+                style={[styles.selectText, !birthday && styles.placeholder]}
+              >
+                {birthday ? formatDateDDMMYYYY(birthday) : 'Chọn ngày sinh'}
+              </Text>
+            </TouchableOpacity>
+
+            {showDatePicker && (
+              <DateTimePicker
+                value={birthday || new Date(1990, 0, 1)}
+                mode="date"
+                display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
+                maximumDate={new Date()}
+                onChange={onChangeDate}
+              />
+            )}
+
+            <TouchableOpacity style={styles.saveButton} onPress={onSave}>
+              <Text style={styles.saveButtonText}>Lưu</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.logoutButton} onPress={onLogout}>
+              <Text style={styles.logoutButtonText}>Đăng xuất</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        </View>
-        <FooterComponent/>
+        <FooterComponent />
       </ScrollView>
     </SafeAreaView>
   );
@@ -254,11 +307,21 @@ const ProfileScreen =() => {
 export default ProfileScreen;
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
-  content: { paddingHorizontal:24, paddingVertical:16 },
-  title: { fontSize: 20, fontWeight: '700', color: '#00b5f1', marginBottom: 4, textAlign:'center' },
-  subtitle: { color: '#666', marginBottom: 12, textAlign:'center' },
+  content: { paddingHorizontal: 24, paddingVertical: 16 },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#00b5f1',
+    marginBottom: 4,
+    textAlign: 'center',
+  },
+  subtitle: { color: '#666', marginBottom: 12, textAlign: 'center' },
   rowCenter: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
-  avatar: { backgroundColor: '#00b5f1', justifyContent: 'center', alignItems: 'center' },
+  avatar: {
+    backgroundColor: '#00b5f1',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   avatarText: { color: '#fff', fontSize: 28, fontWeight: '800' },
   nameText: { fontSize: 16, fontWeight: '800' },
   smallText: { color: '#666', marginTop: 4 },

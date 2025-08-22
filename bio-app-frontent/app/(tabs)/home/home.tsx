@@ -3,6 +3,7 @@ import { AntDesign, Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -358,14 +359,21 @@ const TestScreen = () => {
                       image: dichvu,
                     },
                   ].map((item, index) => (
-                    <View key={index} style={styles.serviceCard}>
+                    <TouchableOpacity
+                      key={index}
+                      style={styles.serviceCard}
+                      onPress={() => {
+                        router.push('/(tabs)/home/booking');
+                      }}
+                      activeOpacity={0.8}
+                    >
                       <Image
                         source={item.image}
                         style={styles.cardImage}
                         resizeMode="contain"
                       />
                       <Text style={styles.cardTitle}>{item.title}</Text>
-                    </View>
+                    </TouchableOpacity>
                   ))}
                 </ScrollView>
               </View>
@@ -453,7 +461,12 @@ const TestScreen = () => {
                     </View>
 
                     {/* Button */}
-                    <TouchableOpacity style={styles.button2}>
+                    <TouchableOpacity
+                      style={styles.button2}
+                      onPress={() => {
+                        router.push('/(tabs)/home/clinics');
+                      }}
+                    >
                       <Text style={styles.buttonText2}>Xem chi tiết</Text>
                     </TouchableOpacity>
                   </View>
@@ -530,11 +543,7 @@ const TestScreen = () => {
                           {/* Button */}
                           <TouchableOpacity
                             style={styles.button3}
-                            onPress={() =>
-                              navigation.navigate('BookingScreen', {
-                                code: service.id,
-                              })
-                            }
+                            onPress={() => router.push('/(tabs)/home/booking')}
                           >
                             <Text style={styles.buttonText3}>
                               Đặt khám ngay

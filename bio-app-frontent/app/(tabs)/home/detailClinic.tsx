@@ -65,54 +65,59 @@ const DetailClinicMobile = () => {
       <>
         <HeaderComponent />
         <View style={styles.mainView}>
-        {/* Card thông tin chính */}
-        <View style={styles.card}>
-          <Image source={{ uri: data.mainImage }} style={styles.mainImage} />
-          <Text style={styles.title}>{data.name}</Text>
-          <Rating size={24} rating={data.rating} disabled fillColor="#f7c860" />
-          <Divider style={styles.divider} />
-          <Text>{data.address}</Text>
-          <Text>{data.workingHours}</Text>
-          <Text>Tổng đài: {data.phone}</Text>
+          {/* Card thông tin chính */}
+          <View style={styles.card}>
+            <Image source={{ uri: data.mainImage }} style={styles.mainImage} />
+            <Text style={styles.title}>{data.name}</Text>
+            <Rating
+              size={24}
+              rating={data.rating}
+              disabled
+              fillColor="#f7c860"
+            />
+            <Divider style={styles.divider} />
+            <Text>{data.address}</Text>
+            <Text>{data.workingHours}</Text>
+            <Text>Tổng đài: {data.phone}</Text>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              router.push({
-                pathname: '/(tabs)/home/booking',
-                params: { ID }, // truyền sang booking
-              })
-            }
-          >
-            <Text style={styles.buttonText}>Đặt khám ngay</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                router.push({
+                  pathname: '/(tabs)/home/booking',
+                  params: { ID }, // truyền sang booking
+                })
+              }
+            >
+              <Text style={styles.buttonText}>Đặt khám ngay</Text>
+            </TouchableOpacity>
+          </View>
 
-        {/* Card cover */}
-        <View style={styles.card}>
-          <Image source={{ uri: data.mainImage }} style={styles.coverImage} />
-        </View>
+          {/* Card cover */}
+          <View style={styles.card}>
+            <Image source={{ uri: data.mainImage }} style={styles.coverImage} />
+          </View>
 
-        {/* Dịch vụ xét nghiệm */}
-        <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Dịch vụ xét nghiệm</Text>
-          <FlatList
-            data={dataService}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <Text style={styles.serviceItem}>✔ {item}</Text>
-            )}
-          />
-        </View>
+          {/* Dịch vụ xét nghiệm */}
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>Dịch vụ xét nghiệm</Text>
+            <FlatList
+              data={dataService}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <Text style={styles.serviceItem}>✔ {item}</Text>
+              )}
+            />
+          </View>
 
-        {/* Mô tả */}
-        <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Mô tả</Text>
-          <Text style={styles.paragraph}>{data.descriptions}</Text>
-        </View>
+          {/* Mô tả */}
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>Mô tả</Text>
+            <Text style={styles.paragraph}>{data.descriptions}</Text>
+          </View>
 
-        {/* Map */}
-        {/* <View style={styles.card}>
+          {/* Map */}
+          {/* <View style={styles.card}>
           <View style={{ height: 300, borderRadius: 12, overflow: 'hidden' }}>
             <WebView
               source={{ uri: data.mapEmbedUrl }}
@@ -123,36 +128,39 @@ const DetailClinicMobile = () => {
           </View>
         </View> */}
 
-        {/* Giới thiệu & chi nhánh */}
-        <View style={styles.card}>
-          <Text style={styles.title}>{data.introTitle}</Text>
-          {Array.isArray(data.introBulletPoints) &&
-          data.introBulletPoints.length > 0 ? (
-            <View style={{ paddingLeft: 10 }}>
-              {data.introBulletPoints.map((point, index) => (
-                <Text key={index}>• {point}</Text>
-              ))}
-            </View>
-          ) : (
-            <Text>Không có thông tin giới thiệu.</Text>
-          )}
-
-          <Divider style={styles.divider} />
-          {Array.isArray(data.branches) && data.branches.length > 0 ? (
-            data.branches.map((branch, index) => (
-              <View key={index} style={{ marginBottom: 10 }}>
-                <Text style={{ fontWeight: 'bold' }}>
-                  Cơ sở tại {branch.city}:
-                </Text>
-                <Text>{branch.address}</Text>
+          {/* Giới thiệu & chi nhánh */}
+          <View style={styles.card}>
+            <Text style={styles.title}>{data.introTitle}</Text>
+            {Array.isArray(data.introBulletPoints) &&
+            data.introBulletPoints.length > 0 ? (
+              <View style={{ paddingLeft: 10 }}>
+                {data.introBulletPoints.map((point, index) => (
+                  <Text key={index}>• {point}</Text>
+                ))}
               </View>
-            ))
-          ) : (
-            <Text>Không có thông tin chi nhánh.</Text>
-          )}
+            ) : (
+              <Text>Không có thông tin giới thiệu.</Text>
+            )}
 
-          <Image source={{ uri: data.mainImage }} style={styles.bottomImage} />
-        </View>
+            <Divider style={styles.divider} />
+            {Array.isArray(data.branches) && data.branches.length > 0 ? (
+              data.branches.map((branch, index) => (
+                <View key={index} style={{ marginBottom: 10 }}>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    Cơ sở tại {branch.city}:
+                  </Text>
+                  <Text>{branch.address}</Text>
+                </View>
+              ))
+            ) : (
+              <Text>Không có thông tin chi nhánh.</Text>
+            )}
+
+            <Image
+              source={{ uri: data.mainImage }}
+              style={styles.bottomImage}
+            />
+          </View>
         </View>
         <FooterComponent />
       </>
@@ -166,11 +174,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f0f7fc',
-
   },
-  mainView:{
-    paddingHorizontal:12,
-    paddingVertical:8
+  mainView: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
   },
   card: {
     backgroundColor: '#fff',

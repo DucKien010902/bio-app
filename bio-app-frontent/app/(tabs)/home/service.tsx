@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View
+  View,
 } from 'react-native';
 import { Button, RadioButton } from 'react-native-paper';
 
@@ -78,93 +78,94 @@ const ServicePageMobile = () => {
 
   return (
     <ScrollView style={styles.container}>
-        <HeaderComponent/>
-        <View style={styles.content}>
-      <Text style={styles.title}>Chọn loại dịch vụ</Text>
+      <HeaderComponent />
+      <View style={styles.content}>
+        <Text style={styles.title}>Chọn loại dịch vụ</Text>
 
-      <RadioButton.Group
-        onValueChange={(value) => setSelectedCategory(value)}
-        value={selectedCategory}
-      >
-        <View style={styles.radioItem}>
-          <RadioButton value="all" />
-          <Text>Tất cả</Text>
-        </View>
-        {testTypes.map((type) => (
-          <View key={type.typeName} style={styles.radioItem}>
-            <RadioButton value={type.typeName} />
-            <Text>{type.typeName}</Text>
+        <RadioButton.Group
+          onValueChange={(value) => setSelectedCategory(value)}
+          value={selectedCategory}
+        >
+          <View style={styles.radioItem}>
+            <RadioButton value="all" />
+            <Text>Tất cả</Text>
           </View>
-        ))}
-      </RadioButton.Group>
+          {testTypes.map((type) => (
+            <View key={type.typeName} style={styles.radioItem}>
+              <RadioButton value={type.typeName} />
+              <Text>{type.typeName}</Text>
+            </View>
+          ))}
+        </RadioButton.Group>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Tìm kiếm dịch vụ"
-        value={searchTerm}
-        onChangeText={setSearchTerm}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Tìm kiếm dịch vụ"
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
 
-      {loading ? (
-        <Text>Đang tải dữ liệu...</Text>
-      ) : servicesToDisplay.length === 0 ? (
-        <Text>Không có dịch vụ nào</Text>
-      ) : (
-        servicesToDisplay.map((service, index) => (
-          <View key={service.code} style={styles.card}>
-            <Text style={styles.serviceName}>
-              {index + 1}. {service.name}
-            </Text>
-            <Text style={styles.serviceDetail}>Lịch khám: {service.schedule}</Text>
-            <Text style={styles.serviceDetail}>
-              Trả kết quả: {service.turnaroundTime}
-            </Text>
-            <Text style={styles.servicePrice}>
-              {service.price.toLocaleString('vi-VN')}₫
-            </Text>
-            <View style={styles.buttonGroup}>
-              <Button
-                mode="outlined"
-                onPress={() => setSelectedService(service)}
-              >
-                Chi tiết
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() =>
-                  router.push('/(tabs)/home/booking')
-                }
-              >
-                Đặt khám
+        {loading ? (
+          <Text>Đang tải dữ liệu...</Text>
+        ) : servicesToDisplay.length === 0 ? (
+          <Text>Không có dịch vụ nào</Text>
+        ) : (
+          servicesToDisplay.map((service, index) => (
+            <View key={service.code} style={styles.card}>
+              <Text style={styles.serviceName}>
+                {index + 1}. {service.name}
+              </Text>
+              <Text style={styles.serviceDetail}>
+                Lịch khám: {service.schedule}
+              </Text>
+              <Text style={styles.serviceDetail}>
+                Trả kết quả: {service.turnaroundTime}
+              </Text>
+              <Text style={styles.servicePrice}>
+                {service.price.toLocaleString('vi-VN')}₫
+              </Text>
+              <View style={styles.buttonGroup}>
+                <Button
+                  mode="outlined"
+                  onPress={() => setSelectedService(service)}
+                >
+                  Chi tiết
+                </Button>
+                <Button
+                  mode="contained"
+                  onPress={() => router.push('/(tabs)/home/booking')}
+                >
+                  Đặt khám
+                </Button>
+              </View>
+            </View>
+          ))
+        )}
+
+        {/* Modal chi tiết */}
+        <Modal
+          visible={!!selectedService}
+          animationType="slide"
+          transparent
+          onRequestClose={() => setSelectedService(null)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalTitle}>🩺 Mô tả chi tiết dịch vụ</Text>
+              <ScrollView style={styles.modalContent}>
+                <Text>
+                  {selectedService?.description ||
+                    'Không có mô tả cho dịch vụ này.'}
+                </Text>
+              </ScrollView>
+              <Button mode="text" onPress={() => setSelectedService(null)}>
+                Đóng
               </Button>
             </View>
           </View>
-        ))
-      )}
-
-      {/* Modal chi tiết */}
-      <Modal
-        visible={!!selectedService}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setSelectedService(null)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>🩺 Mô tả chi tiết dịch vụ</Text>
-            <ScrollView style={styles.modalContent}>
-              <Text>
-                {selectedService?.description || 'Không có mô tả cho dịch vụ này.'}
-              </Text>
-            </ScrollView>
-            <Button mode="text" onPress={() => setSelectedService(null)}>
-              Đóng
-            </Button>
-          </View>
-        </View>
-      </Modal>
+        </Modal>
       </View>
-      <FooterComponent/>
+      <FooterComponent />
     </ScrollView>
   );
 };
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e8f4fd',
     minHeight: '100%',
   },
-  content:{padding:16},
+  content: { padding: 16 },
   title: {
     fontSize: 20,
     marginBottom: 12,

@@ -17,11 +17,10 @@ import { useDispatch } from 'react-redux';
 import FooterComponent from '../../component/footer';
 import HeaderComponent from '../../component/header';
 
-
 const MobileMenu = () => {
   const [user, setUser] = useState(null);
   const navigation = useNavigation();
-  const dispatch= useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     const getUser = async () => {
       const data = await AsyncStorage.getItem('user');
@@ -36,13 +35,12 @@ const MobileMenu = () => {
     // navigation.navigate('Login');
   };
   useEffect(() => {
-  const unsubscribe = navigation.addListener('blur', () => {
-    dispatch(closeMenuBio());
-  });
+    const unsubscribe = navigation.addListener('blur', () => {
+      dispatch(closeMenuBio());
+    });
 
-  return unsubscribe;
-}, [navigation]);
-
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -88,6 +86,11 @@ const MobileMenu = () => {
             icon={<AntDesign name="filetext1" size={20} color="#1890ff" />}
             label="Phiếu xét nghiệm"
             onPress={() => router.push('/(tabs)/home/medicalTicket')}
+          />
+          <MenuItem
+            icon={<MaterialIcons name="newspaper" size={20} color="#1890ff" />}
+            label="Tin tức y tế"
+            onPress={() => router.push('/(tabs)/home/newsPost')}
           />
           <MenuItem
             icon={<AntDesign name="bells" size={20} color="#1890ff" />}

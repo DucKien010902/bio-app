@@ -10,12 +10,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import FooterComponent from '../../component/footer';
 import HeaderComponent from '../../component/header';
 
-const genbio1 = require('../../../assets/images/genbio1.jpg')
+const genbio1 = require('../../../assets/images/genbio1.jpg');
 const ClinicListMobilePage = () => {
   const [clinics, setClinics] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -69,75 +69,90 @@ const ClinicListMobilePage = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <HeaderComponent/>
+      <HeaderComponent />
       <View style={styles.content}>
-      <Text style={styles.title}>Cơ sở y tế</Text>
-      <Text style={styles.subTitle}>
-        Với những cơ sở y tế hàng đầu sẽ giúp bạn trải nghiệm khám, chữa bệnh tốt hơn
-      </Text>
+        <Text style={styles.title}>Cơ sở y tế</Text>
+        <Text style={styles.subTitle}>
+          Với những cơ sở y tế hàng đầu sẽ giúp bạn trải nghiệm khám, chữa bệnh
+          tốt hơn
+        </Text>
 
-      <View style={styles.searchInputContainer}>
-        <Ionicons name="search" size={20} color="#ccc" style={{ marginRight: 8 }} />
-        <TextInput
-          placeholder="Tìm kiếm cơ sở y tế..."
-          value={searchTerm}
-          onChangeText={setSearchTerm}
-          style={styles.searchInput}
-        />
-      </View>
+        <View style={styles.searchInputContainer}>
+          <Ionicons
+            name="search"
+            size={20}
+            color="#ccc"
+            style={{ marginRight: 8 }}
+          />
+          <TextInput
+            placeholder="Tìm kiếm cơ sở y tế..."
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+            style={styles.searchInput}
+          />
+        </View>
 
-      {filteredClinics.map((clinic) => (
-        <TouchableOpacity
-          key={clinic.id}
-          style={styles.card}
-          onPress={() => handleNavigate('ClinicDetail', clinic.ID)}
-        >
-          <View style={styles.cardContent}>
-            <Image source={{ uri: clinic.image }} style={styles.image} />
-            <View style={styles.textContainer}>
-              <Text style={styles.clinicName}>
-                {clinic.name}
-                {clinic.isVerified && (
-                  <Ionicons name="checkmark-circle" size={16} color="#52c41a" style={{ marginLeft: 4 }} />
-                )}
-              </Text>
-              <Text style={styles.address}>
-                <Entypo name="location-pin" size={14} color="#888" /> {clinic.address}
-              </Text>
-              <View style={styles.ratingRow}>
-                <Text style={{ color: '#f7c860' }}>{'★'.repeat(Math.floor(clinic.rating))}</Text>
-                <Text style={{ marginLeft: 4, color: '#f760b6' }}>({clinic.rating})</Text>
+        {filteredClinics.map((clinic) => (
+          <TouchableOpacity
+            key={clinic.id}
+            style={styles.card}
+            onPress={() => handleNavigate('ClinicDetail', clinic.ID)}
+          >
+            <View style={styles.cardContent}>
+              <Image source={{ uri: clinic.image }} style={styles.image} />
+              <View style={styles.textContainer}>
+                <Text style={styles.clinicName}>
+                  {clinic.name}
+                  {clinic.isVerified && (
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={16}
+                      color="#52c41a"
+                      style={{ marginLeft: 4 }}
+                    />
+                  )}
+                </Text>
+                <Text style={styles.address}>
+                  <Entypo name="location-pin" size={14} color="#888" />{' '}
+                  {clinic.address}
+                </Text>
+                <View style={styles.ratingRow}>
+                  <Text style={{ color: '#f7c860' }}>
+                    {'★'.repeat(Math.floor(clinic.rating))}
+                  </Text>
+                  <Text style={{ marginLeft: 4, color: '#f760b6' }}>
+                    ({clinic.rating})
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
-          <View style={styles.buttonRow}>
-            <TouchableOpacity
-              style={styles.detailButton}
-              onPress={(e) => {
-                e.stopPropagation?.();
-                router.push({
-                  pathname: "/(tabs)/home/detailClinic",
-                  params: { ID: clinic.ID }
-                });
-
-              }}
-            >
-              <Text style={styles.detailButtonText}>Xem chi tiết</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.bookButton}
-              onPress={(e) => {
-                e.stopPropagation?.();
-                router.push('/(tabs)/home/booking')
-              }}
-            >
-              <Text style={styles.bookButtonText}>Đặt khám ngay</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-      ))}
+            <View style={styles.buttonRow}>
+              <TouchableOpacity
+                style={styles.detailButton}
+                onPress={(e) => {
+                  e.stopPropagation?.();
+                  router.push({
+                    pathname: '/(tabs)/home/detailClinic',
+                    params: { ID: clinic.ID },
+                  });
+                }}
+              >
+                <Text style={styles.detailButtonText}>Xem chi tiết</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.bookButton}
+                onPress={(e) => {
+                  e.stopPropagation?.();
+                  router.push('/(tabs)/home/booking');
+                }}
+              >
+                <Text style={styles.bookButtonText}>Đặt khám ngay</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
-      <FooterComponent/>
+      <FooterComponent />
     </ScrollView>
   );
 };
@@ -150,8 +165,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#e8f4fd',
     // padding: 16,
   },
-  content:{
-    padding:16
+  content: {
+    padding: 16,
   },
   title: {
     color: '#00b5f1',

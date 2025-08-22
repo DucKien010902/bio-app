@@ -17,6 +17,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
+        lazy: false,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
@@ -30,7 +31,9 @@ export default function TabLayout() {
         name="home"
         options={{
           title: 'Trang chủ',
-          tabBarIcon: ({ color }) => <FontAwesome name="home" size={24} color={color}/>,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="home" size={24} color={color} />
+          ),
         }}
       />
 
@@ -38,7 +41,9 @@ export default function TabLayout() {
         name="booking"
         options={{
           title: 'Đặt lịch',
-          tabBarIcon: ({ color }) => <FontAwesome name="calendar" size={20} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="calendar" size={20} color={color} />
+          ),
         }}
       />
 
@@ -46,7 +51,9 @@ export default function TabLayout() {
         name="results"
         options={{
           title: 'Kết quả',
-          tabBarIcon: ({ color }) => <FontAwesome name="file-text" size={20} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="file-text" size={20} color={color} />
+          ),
         }}
       />
 
@@ -54,7 +61,9 @@ export default function TabLayout() {
         name="test"
         options={{
           title: 'Tài khoản',
-          tabBarIcon: ({ color }) => <FontAwesome name="user" size={24} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="user" size={24} color={color} />
+          ),
         }}
       />
     </Tabs>

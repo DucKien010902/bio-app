@@ -11,7 +11,8 @@ const FooterComponent = () => {
 
       <View style={styles.infoSection}>
         <Text>
-          <Text style={styles.bold}>Địa chỉ:</Text> 28 Thành Thái - Phường Dịch Vọng - Quận Cầu Giấy - TP.Hà Nội
+          <Text style={styles.bold}>Địa chỉ:</Text> 28 Thành Thái - Phường Dịch
+          Vọng - Quận Cầu Giấy - TP.Hà Nội
         </Text>
         <Text>
           <Text style={styles.bold}>Website:</Text> https://genapp.vn
@@ -41,12 +42,15 @@ const FooterComponent = () => {
         <Text style={styles.link}>Phòng xét nghiệm GoLAB Việt Trì</Text>
         <Text style={styles.link}>Phòng xét nghiệm GoLAB Hà Tĩnh</Text>
         <Text style={styles.link}>Lab xét nghiệm GenLAB Hồ Chí Minh</Text>
-        <Text style={styles.link}>Lab xét nghiệm GenovaX Hà Nội 183 Trường Chinh</Text>
+        <Text style={styles.link}>
+          Lab xét nghiệm GenovaX Hà Nội 183 Trường Chinh
+        </Text>
       </View>
 
       <View style={styles.copyright}>
         <Text style={styles.copyrightText}>
-          © 2025 - Bản quyền thuộc Công Ty Cổ Phần Truyền Thông Và Công Nghệ GenTech
+          © 2025 - Bản quyền thuộc Công Ty Cổ Phần Truyền Thông Và Công Nghệ
+          GenTech
         </Text>
       </View>
     </View>

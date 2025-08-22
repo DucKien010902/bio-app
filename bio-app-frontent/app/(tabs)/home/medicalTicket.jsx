@@ -6,9 +6,12 @@ import {
   Alert,
   FlatList,
   Linking,
-  SafeAreaView, ScrollView, StyleSheet, Text,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import axiosClient from '../../../api/apiConfig'; // đường dẫn đúng theo project bạn
 import FooterComponent from '../../component/footer';
@@ -47,16 +50,29 @@ const Stepper = ({ status }) => {
             <View
               style={[
                 styles.stepCircle,
-                { backgroundColor: isActive ? statusColors[s] || '#1890ff' : '#f0f0f0' },
+                {
+                  backgroundColor: isActive
+                    ? statusColors[s] || '#1890ff'
+                    : '#f0f0f0',
+                },
               ]}
             >
-              <Text style={[styles.stepCircleText, isActive && { color: '#fff' }]}>{i + 1}</Text>
+              <Text
+                style={[styles.stepCircleText, isActive && { color: '#fff' }]}
+              >
+                {i + 1}
+              </Text>
             </View>
             {i < statusSteps.length - 1 && (
               <View
                 style={[
                   styles.stepLine,
-                  { backgroundColor: i < current ? statusColors[statusSteps[i]] || '#1890ff' : '#eee' },
+                  {
+                    backgroundColor:
+                      i < current
+                        ? statusColors[statusSteps[i]] || '#1890ff'
+                        : '#eee',
+                  },
                 ]}
               />
             )}
@@ -68,7 +84,9 @@ const Stepper = ({ status }) => {
 };
 
 const TicketCard = ({ ticket }) => {
-  const created = ticket.createdAt ? dayjs(ticket.createdAt).format('DD/MM/YYYY HH:mm') : '-';
+  const created = ticket.createdAt
+    ? dayjs(ticket.createdAt).format('DD/MM/YYYY HH:mm')
+    : '-';
   const currentColor = statusColors[ticket.status] || '#1890ff';
 
   const openResult = async (url) => {
@@ -100,18 +118,37 @@ const TicketCard = ({ ticket }) => {
       </View>
 
       <View style={styles.cardBody}>
-        <Text style={styles.rowText}><Text style={styles.rowLabel}>Thời gian đặt:</Text> {created}</Text>
-        <Text style={styles.rowText}><Text style={styles.rowLabel}>Họ tên:</Text> {ticket.name}</Text>
-        <Text style={styles.rowText}><Text style={styles.rowLabel}>Dịch vụ:</Text> {ticket.serviceName}</Text>
-        <Text style={styles.rowText}><Text style={styles.rowLabel}>Ngày giờ:</Text> {ticket.date} lúc {ticket.time}</Text>
-        <Text style={styles.rowText}><Text style={styles.rowLabel}>Phòng khám:</Text> {ticket.facility}</Text>
-        <Text style={styles.rowText}><Text style={styles.rowLabel}>Lấy mẫu:</Text> {ticket.samplingMethod || '-'}</Text>
+        <Text style={styles.rowText}>
+          <Text style={styles.rowLabel}>Thời gian đặt:</Text> {created}
+        </Text>
+        <Text style={styles.rowText}>
+          <Text style={styles.rowLabel}>Họ tên:</Text> {ticket.name}
+        </Text>
+        <Text style={styles.rowText}>
+          <Text style={styles.rowLabel}>Dịch vụ:</Text> {ticket.serviceName}
+        </Text>
+        <Text style={styles.rowText}>
+          <Text style={styles.rowLabel}>Ngày giờ:</Text> {ticket.date} lúc{' '}
+          {ticket.time}
+        </Text>
+        <Text style={styles.rowText}>
+          <Text style={styles.rowLabel}>Phòng khám:</Text> {ticket.facility}
+        </Text>
+        <Text style={styles.rowText}>
+          <Text style={styles.rowLabel}>Lấy mẫu:</Text>{' '}
+          {ticket.samplingMethod || '-'}
+        </Text>
         {ticket.sampleCollectorName ? (
-          <Text style={styles.rowText}><Text style={styles.rowLabel}>NV thu mẫu:</Text> {ticket.sampleCollectorName}</Text>
+          <Text style={styles.rowText}>
+            <Text style={styles.rowLabel}>NV thu mẫu:</Text>{' '}
+            {ticket.sampleCollectorName}
+          </Text>
         ) : null}
         {ticket.resultLink ? (
           <TouchableOpacity onPress={() => openResult(ticket.resultLink)}>
-            <Text style={[styles.rowText, styles.resultLink]}>KQXN: Xem kết quả</Text>
+            <Text style={[styles.rowText, styles.resultLink]}>
+              KQXN: Xem kết quả
+            </Text>
           </TouchableOpacity>
         ) : null}
       </View>
@@ -121,7 +158,9 @@ const TicketCard = ({ ticket }) => {
 
 const EmptyBox = () => (
   <View style={styles.empty}>
-    <Text style={{ color: '#999', fontWeight: '700' }}>Chưa có lịch sử đặt xét nghiệm</Text>
+    <Text style={{ color: '#999', fontWeight: '700' }}>
+      Chưa có lịch sử đặt xét nghiệm
+    </Text>
   </View>
 );
 
@@ -141,8 +180,12 @@ const MedicalTicketsScreen = () => {
         return;
       }
 
-      const res = await axiosClient.get(`/booking/fetchbyphone?phone=${encodeURIComponent(phone)}`);
-      const sortedData = (res.data || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const res = await axiosClient.get(
+        `/booking/fetchbyphone?phone=${encodeURIComponent(phone)}`
+      );
+      const sortedData = (res.data || []).sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
       setMockBookings(sortedData);
     } catch (error) {
       console.error('Không thể lấy lịch sử phiếu', error);
@@ -160,7 +203,9 @@ const MedicalTicketsScreen = () => {
   if (loading) {
     return (
       <SafeAreaView style={styles.container}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
           <ActivityIndicator size="large" color="#1890ff" />
         </View>
       </SafeAreaView>
@@ -169,25 +214,27 @@ const MedicalTicketsScreen = () => {
 
   return (
     <ScrollView>
-    <SafeAreaView style={styles.container}>
-        <HeaderComponent/>
-      <View style={{ paddingHorizontal:24, paddingVertical:12 }}>
-        <Text style={styles.pageTitle}>Lịch sử xét nghiệm</Text>
-        {mockBookings.length === 0 ? (
-          <EmptyBox />
-        ) : (
-          <FlatList
-            data={mockBookings}
-            keyExtractor={(item) => item.bookID || item._id || Math.random().toString()}
-            renderItem={({ item }) => <TicketCard ticket={item} />}
-            ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 24 }}
-          />
-        )}
-      </View>
-      <FooterComponent/>
-    </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        <HeaderComponent />
+        <View style={{ paddingHorizontal: 24, paddingVertical: 12 }}>
+          <Text style={styles.pageTitle}>Lịch sử xét nghiệm</Text>
+          {mockBookings.length === 0 ? (
+            <EmptyBox />
+          ) : (
+            <FlatList
+              data={mockBookings}
+              keyExtractor={(item) =>
+                item.bookID || item._id || Math.random().toString()
+              }
+              renderItem={({ item }) => <TicketCard ticket={item} />}
+              ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingBottom: 24 }}
+            />
+          )}
+        </View>
+        <FooterComponent />
+      </SafeAreaView>
     </ScrollView>
   );
 };

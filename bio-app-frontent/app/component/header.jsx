@@ -1,14 +1,21 @@
 import { closeMenuBio, openMenuBio } from '@/redux/slices/openMenuSlice';
 import { useNavigation } from '@react-navigation/native';
 import { router, usePathname } from 'expo-router';
-import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
 import gennovaXLogo from '../../assets/images/GenApp logo.png';
 
 const HeaderComponent = () => {
-  const pathname= usePathname()
+  const pathname = usePathname();
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
   const isMobile = width < 768;
@@ -48,7 +55,11 @@ const HeaderComponent = () => {
             router.push('/(tabs)/home/home');
           }}
         >
-          <Image source={gennovaXLogo} style={styles.logo} resizeMode="contain" />
+          <Image
+            source={gennovaXLogo}
+            style={styles.logo}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
 
         <View style={styles.iconContainer}>
@@ -74,7 +85,7 @@ export default HeaderComponent;
 
 const styles = StyleSheet.create({
   paddingHeader: {
-    height: 40,
+    height: 35,
     backgroundColor: 'black',
   },
   header: {
